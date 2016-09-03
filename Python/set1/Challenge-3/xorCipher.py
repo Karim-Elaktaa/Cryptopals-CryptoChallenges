@@ -15,20 +15,17 @@ freqs = {
     ' ': 0.1918182 
 }
 
-data = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-
 def score(phrase):
+	phrase = phrase.lower()
 	return sum([freqs[x] for x in phrase if x in freqs.keys()])
 
 def bruteForceXOR(inData):
 	maxScore = 0
 	res = ""
 	for x in range(0, 256):
-		xorToTry = str(x) * len(data)
-		transformedData = fixedXOR(data, xorToTry).decode("hex")
+		xorToTry = str(x) * len(inData)
+		transformedData = fixedXOR(inData, xorToTry).decode("hex")
 		if score(transformedData) > maxScore:
 			maxScore = score(transformedData)
 			res = transformedData
 	return res
-
-print bruteForceXOR(data)
